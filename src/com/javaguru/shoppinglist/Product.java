@@ -32,4 +32,9 @@ public class Product {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        String format = "{ ID: %d | Name: %s | Price: %.2f }";
+        return String.format(format, id, name, price);
+    }
 }

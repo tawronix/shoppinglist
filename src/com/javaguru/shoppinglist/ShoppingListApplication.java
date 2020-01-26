@@ -9,14 +9,14 @@ class ShoppingListApplication {
 
     public static void main(String[] args) {
         Map<Long, Product> productRepository = new HashMap<>();
-        Long productIdSequence = 0L;
+        long productIdSequence = 0L;
         while (true) {
             Scanner scanner = new Scanner(System.in);
             try {
                 System.out.println("1. Create product");
                 System.out.println("2. Find product by id");
                 System.out.println("3. Exit");
-                Integer userInput = Integer.valueOf(scanner.nextLine());
+                int userInput = Integer.parseInt(scanner.nextLine());
                 switch (userInput) {
                     case 1:
                         System.out.println("Enter product name: ");
@@ -30,11 +30,13 @@ class ShoppingListApplication {
                         productRepository.put(productIdSequence, product);
                         productIdSequence++;
                         System.out.println("Result: " + product.getId());
+                        break;
                     case 2:
                         System.out.println("Enter product id: ");
                         long id = scanner.nextLong();
                         Product findProductResult = productRepository.get(id);
                         System.out.println(findProductResult);
+                        break;
                     case 3:
                         return;
                 }
