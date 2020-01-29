@@ -23,8 +23,7 @@ public class Product {
         return name;
     }
 
-    // Product name can't be less than 3 and more than 32 characters.
-    public void setName(String name) throws DataValidationException {
+    public void setName(String name) {
         if (name.length() < 3 || name.length() > 32) {
             throw new DataValidationException("Product name can't be less than 3 and more than 32 characters.");
         }
@@ -43,8 +42,7 @@ public class Product {
         return price;
     }
 
-    // Product price must be greater than zero.
-    public void setPrice(BigDecimal price) throws DataValidationException {
+    public void setPrice(BigDecimal price) {
         if (price.compareTo(BigDecimal.ZERO) <= 0) {
             throw new DataValidationException("Product price must be greater than zero.");
         }
@@ -55,8 +53,7 @@ public class Product {
         return discount;
     }
 
-    // Product discount can't be negative or greater than 100%.
-    public void setDiscount(BigDecimal discount) throws DataValidationException {
+    public void setDiscount(BigDecimal discount) {
         if (discount.compareTo(BigDecimal.ZERO) < 0 || discount.compareTo(new BigDecimal("100")) > 0 ) {
             throw new DataValidationException("Product discount can't be negative or greater than 100%.");
         }
