@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public class EditMenuService {
     private final UserInput userInput = new UserInput();
-    private final ProductService productService = new ProductService();
+    private final ProductService productService = ProductService.getInstance();
     private final Menu menu;
 
     private Product product;
@@ -54,5 +54,9 @@ public class EditMenuService {
         } catch (ProductValidationException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void cancel() {
+        menu.setActive(false);
     }
 }

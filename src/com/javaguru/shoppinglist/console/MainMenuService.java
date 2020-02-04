@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public class MainMenuService {
     private final UserInput userInput = new UserInput();
-    private final ProductService productService = new ProductService();
+    private final ProductService productService = ProductService.getInstance();
     private final Menu menu;
 
     public MainMenuService(Menu menu) {
@@ -59,8 +59,8 @@ public class MainMenuService {
 
     public void deleteProduct() {
         long id = userInput.getLong("Enter product id");
-        long deletedId = productService.deleteProduct(id);
-        System.out.println(deletedId == id ? String.format("Product deleted. { ID: %d }", id) : "Product not found.");
+        Product deletedProduct = productService.deleteProduct(id);
+        System.out.println(deletedProduct != null ? String.format("Product deleted. { ID: %d }", deletedProduct.getId()) : "Product not found.");
     }
 
     public void exit() {

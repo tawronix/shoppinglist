@@ -7,7 +7,9 @@ public interface ProductRepository {
 
     Product findById(long id);
 
+    Product findByName(String name);
+
     Product update(Product product);
 
-    long delete(long id);
+    Product delete(long id);
 }

@@ -6,8 +6,17 @@ import com.javaguru.shoppinglist.product.repository.ProductRepository;
 import com.javaguru.shoppinglist.product.validation.ProductValidationService;
 
 public class ProductService {
+    private static final ProductService ourInstance = new ProductService();
+
     private final ProductRepository productRepository = new ProductInMemoryRepository();
-    private final ProductValidationService validationService = new ProductValidationService();
+    private final ProductValidationService validationService = new ProductValidationService(this);
+
+    private ProductService() {
+    }
+
+    public static ProductService getInstance() {
+        return ourInstance;
+    }
 
     public long createProduct(Product product) {
         validationService.validate(product);
@@ -19,12 +28,16 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
+    public Product findProductByName(String name) {
+        return productRepository.findByName(name);
+    }
+
     public Product updateProduct(Product product) {
         validationService.validate(product);
         return productRepository.update(product);
     }
 
-    public long deleteProduct(long id) {
+    public Product deleteProduct(long id) {
         return productRepository.delete(id);
     }
 }
