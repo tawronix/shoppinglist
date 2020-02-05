@@ -1,9 +1,8 @@
-package com.javaguru.shoppinglist;
+package com.javaguru.shoppinglist.product;
 
 import java.math.BigDecimal;
 
 public class Product {
-
     private Long id;
     private String name;
     private String category;
@@ -24,9 +23,6 @@ public class Product {
     }
 
     public void setName(String name) {
-        if (name.length() < 3 || name.length() > 32) {
-            throw new DataValidationException("Product name can't be less than 3 and more than 32 characters.");
-        }
         this.name = name;
     }
 
@@ -43,9 +39,6 @@ public class Product {
     }
 
     public void setPrice(BigDecimal price) {
-        if (price.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new DataValidationException("Product price must be greater than zero.");
-        }
         this.price = price;
     }
 
@@ -54,9 +47,6 @@ public class Product {
     }
 
     public void setDiscount(BigDecimal discount) {
-        if (discount.compareTo(BigDecimal.ZERO) < 0 || discount.compareTo(new BigDecimal("100")) > 0 ) {
-            throw new DataValidationException("Product discount can't be negative or greater than 100%.");
-        }
         this.discount = discount;
     }
 
@@ -70,7 +60,7 @@ public class Product {
 
     @Override
     public String toString() {
-        String format = "Product { ID: %d | Name: %s | Category: %s | Price: %.2f | Discount: %.0f%% | Description: %s }";
+        String format = "Product { ID: %d | Name: %s | Category: %s | Price: %.2f | Discount: %.1f%% | Description: %s }";
         return String.format(format, id, name, category, price, discount, description);
     }
 }
