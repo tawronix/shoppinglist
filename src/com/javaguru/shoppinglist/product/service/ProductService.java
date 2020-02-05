@@ -9,13 +9,13 @@ public class ProductService {
     private final ProductRepository productRepository = new ProductInMemoryRepository();
     private final ProductValidationService validationService = new ProductValidationService();
 
-    public long createProduct(Product product) {
+    public Long createProduct(Product product) {
         validationService.validate(product);
         Product createdProduct = productRepository.insert(product);
         return createdProduct.getId();
     }
 
-    public Product findProductById(long id) {
+    public Product findProductById(Long id) {
         return productRepository.findById(id);
     }
 
@@ -24,7 +24,7 @@ public class ProductService {
         return productRepository.update(product);
     }
 
-    public long deleteProduct(long id) {
+    public Long deleteProduct(Long id) {
         return productRepository.delete(id);
     }
 }

@@ -3,18 +3,18 @@ package com.javaguru.shoppinglist.product;
 import java.math.BigDecimal;
 
 public class Product {
-    private long id;
+    private Long id;
     private String name;
     private String category;
     private BigDecimal price;
     private BigDecimal discount;
     private String description;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

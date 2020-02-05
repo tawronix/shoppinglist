@@ -5,9 +5,9 @@ import com.javaguru.shoppinglist.product.Product;
 public interface ProductRepository {
     Product insert(Product product);
 
-    Product findById(long id);
+    Product findById(Long id);
 
     Product update(Product product);
 
-    long delete(long id);
+    Long delete(Long id);
 }

@@ -18,7 +18,7 @@ public class UserInput {
         return userInput;
     }
 
-    public int getInt(String hint) {
+    public Integer getInt(String hint) {
         int userInput;
         while (true) {
             try {
@@ -31,7 +31,7 @@ public class UserInput {
         return userInput;
     }
 
-    public long getLong(String hint) {
+    public Long getLong(String hint) {
         long userInput;
         while (true) {
             try {

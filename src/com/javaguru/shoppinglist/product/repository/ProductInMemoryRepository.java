@@ -17,7 +17,7 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
-    public Product findById(long id) {
+    public Product findById(Long id) {
         return products.get(id);
     }
 
@@ -28,7 +28,7 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
-    public long delete(long id) {
+    public Long delete(Long id) {
         Product product = products.remove(id);
         return product != null ? product.getId() : -1;
     }

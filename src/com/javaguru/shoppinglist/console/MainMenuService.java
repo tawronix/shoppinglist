@@ -30,7 +30,7 @@ public class MainMenuService {
         product.setDescription(description);
 
         try {
-            long id = productService.createProduct(product);
+            Long id = productService.createProduct(product);
             System.out.printf("New product created. { ID: %d }%n", id);
         } catch (ProductValidationException e) {
             System.out.println(e.getMessage());
@@ -38,13 +38,13 @@ public class MainMenuService {
     }
 
     public void findProductById() {
-        long id = userInput.getLong("Enter product id");
+        Long id = userInput.getLong("Enter product id");
         Product product = productService.findProductById(id);
         System.out.println(product != null ? product : "Product not found.");
     }
 
     public void editProduct() {
-        long id = userInput.getLong("Enter product id");
+        Long id = userInput.getLong("Enter product id");
         Product product = productService.findProductById(id);
         if (product != null) {
             System.out.println(product);
