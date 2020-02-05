@@ -48,8 +48,8 @@ public class EditMenuService {
 
     public void save() {
         try {
-            Product updatedProduct = productService.updateProduct(product);
-            System.out.printf("Product updated. { ID: %d }%n", updatedProduct.getId());
+            boolean result = productService.updateProduct(product);
+            System.out.println(result ? String.format("Product updated. { ID: %d }", product.getId()) : "Error. Product has not been updated.");
             menu.setActive(false);
         } catch (ProductValidationException e) {
             System.out.println(e.getMessage());

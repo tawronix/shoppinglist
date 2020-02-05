@@ -18,13 +18,13 @@ public class ProductService {
         return ourInstance;
     }
 
-    public long createProduct(Product product) {
+    public Long createProduct(Product product) {
         validationService.validate(product);
         Product createdProduct = productRepository.insert(product);
         return createdProduct.getId();
     }
 
-    public Product findProductById(long id) {
+    public Product findProductById(Long id) {
         return productRepository.findById(id);
     }
 
@@ -32,12 +32,12 @@ public class ProductService {
         return productRepository.findByName(name);
     }
 
-    public Product updateProduct(Product product) {
+    public boolean updateProduct(Product product) {
         validationService.validate(product);
         return productRepository.update(product);
     }
 
-    public Product deleteProduct(long id) {
+    public boolean deleteProduct(Long id) {
         return productRepository.delete(id);
     }
 }

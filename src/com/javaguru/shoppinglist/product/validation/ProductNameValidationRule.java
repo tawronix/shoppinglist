@@ -24,7 +24,7 @@ public class ProductNameValidationRule implements ProductValidationRule {
         }
 
         Product foundProduct = productService.findProductByName(name);
-        if (foundProduct != null && foundProduct.getId() != product.getId()) {
+        if (foundProduct != null && !foundProduct.getId().equals(product.getId())) {
             throw new ProductValidationException("Product with the same name already exists.");
         }
     }

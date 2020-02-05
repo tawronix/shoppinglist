@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ProductInMemoryRepository implements ProductRepository {
     private final Map<Long, Product> products = new HashMap<>();
-    private long productIdSequence = 1L;
+    private Long productIdSequence = 1L;
 
     @Override
     public Product insert(Product product) {
@@ -17,7 +17,7 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
-    public Product findById(long id) {
+    public Product findById(Long id) {
         return createCopy(products.get(id));
     }
 
@@ -28,19 +28,20 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
-    public Product update(Product product) {
+    public boolean update(Product product) {
         Product storedProduct = products.get(product.getId());
         storedProduct.setName(product.getName());
         storedProduct.setCategory(product.getCategory());
         storedProduct.setPrice(product.getPrice());
         storedProduct.setDiscount(product.getDiscount());
         storedProduct.setDescription(product.getDescription());
-        return product;
+        return true;
     }
 
     @Override
-    public Product delete(long id) {
-        return products.remove(id);
+    public boolean delete(Long id) {
+        Product deletedProduct = products.remove(id);
+        return deletedProduct != null;
     }
 
     private Product createCopy(Product original) {

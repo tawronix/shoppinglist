@@ -5,11 +5,11 @@ import com.javaguru.shoppinglist.product.Product;
 public interface ProductRepository {
     Product insert(Product product);
 
-    Product findById(long id);
+    Product findById(Long id);
 
     Product findByName(String name);
 
-    Product update(Product product);
+    boolean update(Product product);
 
-    Product delete(long id);
+    boolean delete(Long id);
 }

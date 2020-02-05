@@ -58,9 +58,9 @@ public class MainMenuService {
     }
 
     public void deleteProduct() {
-        long id = userInput.getLong("Enter product id");
-        Product deletedProduct = productService.deleteProduct(id);
-        System.out.println(deletedProduct != null ? String.format("Product deleted. { ID: %d }", deletedProduct.getId()) : "Product not found.");
+        Long id = userInput.getLong("Enter product id");
+        boolean result = productService.deleteProduct(id);
+        System.out.println(result ? String.format("Product deleted. { ID: %d }", id) : "Product not found.");
     }
 
     public void exit() {
