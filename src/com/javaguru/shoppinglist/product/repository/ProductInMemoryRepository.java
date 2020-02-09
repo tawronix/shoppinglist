@@ -45,6 +45,7 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     private Product createCopy(Product original) {
+        if (original == null) return null;
         Product productCopy = new Product();
         productCopy.setId(original.getId());
         productCopy.setName(original.getName());

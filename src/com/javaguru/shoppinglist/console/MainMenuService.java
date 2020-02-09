@@ -48,7 +48,7 @@ public class MainMenuService {
         Product product = productService.findProductById(id);
         if (product != null) {
             System.out.println(product);
-            Menu editMenu = UIFactory.getInstance().getEditMenu(product);
+            Menu editMenu = UIFactory.getInstance().getEditProductMenu(product);
             do {
                 editMenu.show();
             } while (editMenu.isActive());
@@ -61,6 +61,13 @@ public class MainMenuService {
         Long id = userInput.getLong("Enter product id");
         boolean result = productService.deleteProduct(id);
         System.out.println(result ? String.format("Product deleted. { ID: %d }", id) : "Product not found.");
+    }
+
+    public void shoppingCart() {
+        Menu shoppingCartMenu = UIFactory.getInstance().getShoppingCartMenu();
+        do {
+            shoppingCartMenu.show();
+        } while (shoppingCartMenu.isActive());
     }
 
     public void exit() {

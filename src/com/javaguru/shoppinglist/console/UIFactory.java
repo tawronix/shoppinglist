@@ -6,13 +6,15 @@ public class UIFactory {
     private static UIFactory ourInstance = new UIFactory();
 
     private final Menu mainMenu;
-    private final Menu editMenu;
+    private final Menu editProductMenu;
+    private final Menu shoppingCartMenu;
 
-    private EditMenuService editMenuService;
+    private EditProductMenuService editProductMenuService;
 
     private UIFactory() {
         mainMenu = createMainMenu();
-        editMenu = createEditMenu();
+        editProductMenu = createEditProductMenu();
+        shoppingCartMenu = createShoppingCartMenu();
     }
 
     public static UIFactory getInstance() {
@@ -23,9 +25,13 @@ public class UIFactory {
         return mainMenu;
     }
 
-    public Menu getEditMenu(Product product) {
-        editMenuService.setProduct(product);
-        return editMenu;
+    public Menu getEditProductMenu(Product product) {
+        editProductMenuService.setProduct(product);
+        return editProductMenu;
+    }
+
+    public Menu getShoppingCartMenu() {
+        return shoppingCartMenu;
     }
 
     private Menu createMainMenu() {
@@ -35,20 +41,31 @@ public class UIFactory {
         mainMenu.addItem(new MenuItem("Find product by id", mainMenuService::findProductById));
         mainMenu.addItem(new MenuItem("Edit product", mainMenuService::editProduct));
         mainMenu.addItem(new MenuItem("Delete product", mainMenuService::deleteProduct));
+        mainMenu.addItem(new MenuItem("Shopping Cart", mainMenuService::shoppingCart));
         mainMenu.addItem(new MenuItem("Exit", mainMenuService::exit));
         return mainMenu;
     }
 
-    private Menu createEditMenu() {
-        Menu editMenu = new Menu("EDIT");
-        editMenuService = new EditMenuService(editMenu);
-        editMenu.addItem(new MenuItem("Name", editMenuService::editName));
-        editMenu.addItem(new MenuItem("Category", editMenuService::editCategory));
-        editMenu.addItem(new MenuItem("Price", editMenuService::editPrice));
-        editMenu.addItem(new MenuItem("Discount", editMenuService::editDiscount));
-        editMenu.addItem(new MenuItem("Description", editMenuService::editDescription));
-        editMenu.addItem(new MenuItem("Save", editMenuService::save));
-        editMenu.addItem(new MenuItem("Cancel", editMenuService::cancel));
-        return editMenu;
+    private Menu createEditProductMenu() {
+        Menu editProductMenu = new Menu("EDIT PRODUCT");
+        editProductMenuService = new EditProductMenuService(editProductMenu);
+        editProductMenu.addItem(new MenuItem("Name", editProductMenuService::editName));
+        editProductMenu.addItem(new MenuItem("Category", editProductMenuService::editCategory));
+        editProductMenu.addItem(new MenuItem("Price", editProductMenuService::editPrice));
+        editProductMenu.addItem(new MenuItem("Discount", editProductMenuService::editDiscount));
+        editProductMenu.addItem(new MenuItem("Description", editProductMenuService::editDescription));
+        editProductMenu.addItem(new MenuItem("Save", editProductMenuService::save));
+        editProductMenu.addItem(new MenuItem("Cancel", editProductMenuService::cancel));
+        return editProductMenu;
+    }
+
+    private Menu createShoppingCartMenu() {
+        Menu shoppingCartMenu = new Menu("SHOPPING CART");
+        ShoppingCartMenuService shoppingCartMenuService = new ShoppingCartMenuService(shoppingCartMenu);
+        shoppingCartMenu.addItem(new MenuItem("Create shopping cart", shoppingCartMenuService::createShoppingCart));
+        shoppingCartMenu.addItem(new MenuItem("Find shopping cart", shoppingCartMenuService::findShoppingCart));
+        shoppingCartMenu.addItem(new MenuItem("Delete shopping cart", shoppingCartMenuService::deleteShoppingCart));
+        shoppingCartMenu.addItem(new MenuItem("Back", shoppingCartMenuService::back));
+        return shoppingCartMenu;
     }
 }

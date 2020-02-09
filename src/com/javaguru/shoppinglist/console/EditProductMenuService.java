@@ -6,14 +6,14 @@ import com.javaguru.shoppinglist.product.validation.ProductValidationException;
 
 import java.math.BigDecimal;
 
-public class EditMenuService {
+public class EditProductMenuService {
     private final UserInput userInput = new UserInput();
     private final ProductService productService = ProductService.getInstance();
     private final Menu menu;
 
     private Product product;
 
-    public EditMenuService(Menu menu) {
+    public EditProductMenuService(Menu menu) {
         this.menu = menu;
     }
 
