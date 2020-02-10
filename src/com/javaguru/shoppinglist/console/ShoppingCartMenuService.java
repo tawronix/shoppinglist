@@ -9,6 +9,7 @@ import com.javaguru.shoppinglist.shoppingcart.validation.ShoppingCartValidationE
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public class ShoppingCartMenuService {
     private final UserInput userInput = new UserInput();
@@ -59,11 +60,11 @@ public class ShoppingCartMenuService {
         while (addNextProduct) {
             Long id = userInput.getLong("Enter product id (0 - to finish)");
             if (id != 0) {
-                Product product = productService.findProductById(id);
-                if (product != null) {
+                Optional<Product> product = productService.findProductById(id);
+                if (product.isPresent()) {
                     System.out.println(product);
                     BigDecimal quantity = userInput.getBigDecimal("Enter quantity");
-                    shoppingCart.addProduct(product, quantity);
+                    shoppingCart.addProduct(product.get(), quantity);
                 } else {
                     System.out.println("Product not found.");
                 }

@@ -52,7 +52,7 @@ public class MainMenuService {
         Optional<Product> product = productService.findProductById(id);
         if (product.isPresent()) {
             System.out.println(product.get());
-            Menu editMenu = UIFactory.getInstance().getEditMenu(product.get());
+            Menu editMenu = UIFactory.getInstance().getEditProductMenu(product.get());
             do {
                 editMenu.show();
             } while (editMenu.isActive());
