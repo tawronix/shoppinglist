@@ -5,6 +5,8 @@ import com.javaguru.shoppinglist.product.repository.ProductInMemoryRepository;
 import com.javaguru.shoppinglist.product.repository.ProductRepository;
 import com.javaguru.shoppinglist.product.validation.ProductValidationService;
 
+import java.util.Optional;
+
 public class ProductService {
     private static final ProductService ourInstance = new ProductService();
 
@@ -24,11 +26,11 @@ public class ProductService {
         return createdProduct.getId();
     }
 
-    public Product findProductById(Long id) {
+    public Optional<Product> findProductById(Long id) {
         return productRepository.findById(id);
     }
 
-    public Product findProductByName(String name) {
+    public Optional<Product> findProductByName(String name) {
         return productRepository.findByName(name);
     }
 
