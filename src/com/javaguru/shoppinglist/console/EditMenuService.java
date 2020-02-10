@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public class EditMenuService {
     private final UserInput userInput = new UserInput();
-    private final ProductService productService = new ProductService();
+    private final ProductService productService = ProductService.getInstance();
     private final Menu menu;
 
     private Product product;
@@ -48,11 +48,15 @@ public class EditMenuService {
 
     public void save() {
         try {
-            Product updatedProduct = productService.updateProduct(product);
-            System.out.printf("Product updated. { ID: %d }%n", updatedProduct.getId());
+            boolean result = productService.updateProduct(product);
+            System.out.println(result ? String.format("Product updated. { ID: %d }", product.getId()) : "Error. Product has not been updated.");
             menu.setActive(false);
         } catch (ProductValidationException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void cancel() {
+        menu.setActive(false);
     }
 }

@@ -6,7 +6,7 @@ public class ConsoleUI {
         try {
             do {
                 mainMenu.show();
-                System.out.println();
+                System.out.println("-".repeat(100));
             } while (mainMenu.isActive());
         } catch (Exception e) {
             e.printStackTrace();

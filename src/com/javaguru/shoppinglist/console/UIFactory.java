@@ -3,7 +3,7 @@ package com.javaguru.shoppinglist.console;
 import com.javaguru.shoppinglist.product.Product;
 
 public class UIFactory {
-    private static UIFactory ourInstance;
+    private static UIFactory ourInstance = new UIFactory();
 
     private final Menu mainMenu;
     private final Menu editMenu;
@@ -16,9 +16,6 @@ public class UIFactory {
     }
 
     public static UIFactory getInstance() {
-        if (ourInstance == null) {
-            ourInstance = new UIFactory();
-        }
         return ourInstance;
     }
 
@@ -51,6 +48,7 @@ public class UIFactory {
         editMenu.addItem(new MenuItem("Discount", editMenuService::editDiscount));
         editMenu.addItem(new MenuItem("Description", editMenuService::editDescription));
         editMenu.addItem(new MenuItem("Save", editMenuService::save));
+        editMenu.addItem(new MenuItem("Cancel", editMenuService::cancel));
         return editMenu;
     }
 }
