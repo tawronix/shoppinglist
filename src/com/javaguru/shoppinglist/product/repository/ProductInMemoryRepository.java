@@ -24,10 +24,10 @@ public class ProductInMemoryRepository implements ProductRepository {
 
     @Override
     public Optional<Product> findByName(String name) {
-        Optional<Product> result = products.values().stream()
+        return products.values().stream()
                 .filter(product -> product.getName().equalsIgnoreCase(name))
-                .findFirst();
-        return Optional.ofNullable(createCopy(result.orElse(null)));
+                .findFirst()
+                .map(this::createCopy);
     }
 
     @Override
