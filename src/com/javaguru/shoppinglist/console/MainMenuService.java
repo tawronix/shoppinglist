@@ -5,8 +5,12 @@ import com.javaguru.shoppinglist.product.service.ProductService;
 import com.javaguru.shoppinglist.product.validation.ProductValidationException;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class MainMenuService {
+    public static final String ENTER_PRODUCT_ID = "Enter product id";
+    public static final String PRODUCT_NOT_FOUND = "Product not found.";
+
     private final UserInput userInput = new UserInput();
     private final ProductService productService = ProductService.getInstance();
     private final Menu menu;
@@ -38,29 +42,29 @@ public class MainMenuService {
     }
 
     public void findProductById() {
-        Long id = userInput.getLong("Enter product id");
-        Product product = productService.findProductById(id);
-        System.out.println(product != null ? product : "Product not found.");
+        Long id = userInput.getLong(ENTER_PRODUCT_ID);
+        Optional<Product> product = productService.findProductById(id);
+        System.out.println(product.isPresent() ? product.get() : PRODUCT_NOT_FOUND);
     }
 
     public void editProduct() {
-        Long id = userInput.getLong("Enter product id");
-        Product product = productService.findProductById(id);
-        if (product != null) {
-            System.out.println(product);
-            Menu editMenu = UIFactory.getInstance().getEditProductMenu(product);
+        Long id = userInput.getLong(ENTER_PRODUCT_ID);
+        Optional<Product> product = productService.findProductById(id);
+        if (product.isPresent()) {
+            System.out.println(product.get());
+            Menu editMenu = UIFactory.getInstance().getEditMenu(product.get());
             do {
                 editMenu.show();
             } while (editMenu.isActive());
         } else {
-            System.out.println("Product not found.");
+            System.out.println(PRODUCT_NOT_FOUND);
         }
     }
 
     public void deleteProduct() {
-        Long id = userInput.getLong("Enter product id");
+        Long id = userInput.getLong(ENTER_PRODUCT_ID);
         boolean result = productService.deleteProduct(id);
-        System.out.println(result ? String.format("Product deleted. { ID: %d }", id) : "Product not found.");
+        System.out.println(result ? String.format("Product deleted. { ID: %d }", id) : PRODUCT_NOT_FOUND);
     }
 
     public void shoppingCart() {

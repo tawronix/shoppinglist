@@ -4,6 +4,7 @@ import com.javaguru.shoppinglist.product.Product;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ProductInMemoryRepository implements ProductRepository {
     private final Map<Long, Product> products = new HashMap<>();
@@ -17,14 +18,16 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
-    public Product findById(Long id) {
-        return createCopy(products.get(id));
+    public Optional<Product> findById(Long id) {
+        return Optional.ofNullable(createCopy(products.get(id)));
     }
 
     @Override
-    public Product findByName(String name) {
-        Product[] productList = products.values().stream().filter(product -> product.getName().equalsIgnoreCase(name)).toArray(Product[]::new);
-        return productList.length > 0 ? createCopy(productList[0]) : null;
+    public Optional<Product> findByName(String name) {
+        return products.values().stream()
+                .filter(product -> product.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .map(this::createCopy);
     }
 
     @Override
