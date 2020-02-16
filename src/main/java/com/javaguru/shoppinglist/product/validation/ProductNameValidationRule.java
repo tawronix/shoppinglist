@@ -1,15 +1,15 @@
 package com.javaguru.shoppinglist.product.validation;
 
 import com.javaguru.shoppinglist.product.Product;
-import com.javaguru.shoppinglist.product.service.ProductService;
+import com.javaguru.shoppinglist.product.repository.ProductRepository;
 
 import java.util.Optional;
 
 public class ProductNameValidationRule implements ProductValidationRule {
-    private final ProductService productService;
+    private final ProductRepository productRepository;
 
-    public ProductNameValidationRule(ProductService productService) {
-        this.productService = productService;
+    public ProductNameValidationRule(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ProductNameValidationRule implements ProductValidationRule {
             throw new ProductValidationException("Product name can't be less than 3 and more than 32 characters.");
         }
 
-        Optional<Product> foundProduct = productService.findProductByName(name);
+        Optional<Product> foundProduct = productRepository.findByName(name);
         if (foundProduct.isPresent() && !foundProduct.get().getId().equals(product.getId())) {
             throw new ProductValidationException("Product with the same name already exists.");
         }

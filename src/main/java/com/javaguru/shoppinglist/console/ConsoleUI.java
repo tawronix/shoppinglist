@@ -1,8 +1,13 @@
 package com.javaguru.shoppinglist.console;
 
 public class ConsoleUI {
+    private final Menu mainMenu;
+
+    public ConsoleUI(Menu mainMenu) {
+        this.mainMenu = mainMenu;
+    }
+
     public void start() {
-        Menu mainMenu = UIFactory.getInstance().getMainMenu();
         try {
             do {
                 mainMenu.show();

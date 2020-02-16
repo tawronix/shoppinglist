@@ -1,7 +1,7 @@
 package com.javaguru.shoppinglist.product.validation;
 
 import com.javaguru.shoppinglist.product.Product;
-import com.javaguru.shoppinglist.product.service.ProductService;
+import com.javaguru.shoppinglist.product.repository.ProductRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ProductNameValidationRuleTest {
     @Mock
-    private ProductService productService;
+    private ProductRepository productRepository;
     @InjectMocks
     private ProductNameValidationRule victim;
 
@@ -45,7 +45,7 @@ public class ProductNameValidationRuleTest {
                 .hasMessage("Product name can't be less than 3 and more than 32 characters.");
 
         Optional<Product> foundProduct = Optional.of(createProduct("TEST_PRODUCT", 9999L));
-        when(productService.findProductByName("TEST_PRODUCT")).thenReturn(foundProduct);
+        when(productRepository.findByName("TEST_PRODUCT")).thenReturn(foundProduct);
         product = createProduct("TEST_PRODUCT", 1234L);
         assertThatThrownBy(() -> victim.validate(product))
                 .isInstanceOf(ProductValidationException.class)
@@ -60,12 +60,12 @@ public class ProductNameValidationRuleTest {
         product = createProduct("A".repeat(32));
         victim.validate(product);
 
-        when(productService.findProductByName("TEST_PRODUCT")).thenReturn(Optional.empty());
+        when(productRepository.findByName("TEST_PRODUCT")).thenReturn(Optional.empty());
         product = createProduct("TEST_PRODUCT");
         victim.validate(product);
 
         Optional<Product> foundProduct = Optional.of(createProduct("TEST_PRODUCT_2", 1234L));
-        when(productService.findProductByName("TEST_PRODUCT_2")).thenReturn(foundProduct);
+        when(productRepository.findByName("TEST_PRODUCT_2")).thenReturn(foundProduct);
         product = createProduct("TEST_PRODUCT_2", 1234L);
         victim.validate(product);
     }

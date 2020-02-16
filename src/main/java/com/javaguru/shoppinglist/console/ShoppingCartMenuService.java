@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class ShoppingCartMenuService {
-    private final UserInput userInput = new UserInput();
-    private final ShoppingCartService shoppingCartService = ShoppingCartService.getInstance();
-    private final ProductService productService = ProductService.getInstance();
+    private final ShoppingCartService shoppingCartService;
+    private final ProductService productService;
     private final Menu menu;
+    private final UserInput userInput = new UserInput();
 
-    public ShoppingCartMenuService(Menu menu) {
+    public ShoppingCartMenuService(ShoppingCartService shoppingCartService, ProductService productService, Menu menu) {
+        this.shoppingCartService = shoppingCartService;
+        this.productService = productService;
         this.menu = menu;
     }
 
@@ -79,13 +81,13 @@ public class ShoppingCartMenuService {
         List<ShoppingCartItem> productList = shoppingCart.getProductList();
         System.out.println("-".repeat(100));
         System.out.printf("Shopping cart: \"%s\" | Total cost: %.2f%n", shoppingCart.getName(), totalCost);
-        for (ShoppingCartItem item : productList) {
+        productList.forEach(item -> {
             Product product = item.getProduct();
             System.out.printf("\t%d. %s | Price: %.2f | Discount: %.1f%% | Quantity: %.3f%n",
-                    productList.indexOf(item) + 1, product.getName(),
-                    product.getPrice(), product.getDiscount(), item.getQuantity()
+                    productList.indexOf(item) + 1, product.getName(), product.getPrice(),
+                    product.getDiscount(), item.getQuantity()
             );
-        }
+        });
         System.out.println("-".repeat(100));
     }
 }
