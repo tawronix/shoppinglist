@@ -19,12 +19,14 @@ public class ProductDiscountValidationRule implements ProductValidationRule {
         }
 
         if (discount.compareTo(MIN_DISCOUNT) < 0 || discount.compareTo(MAX_DISCOUNT) > 0) {
-            throw new ProductValidationException(String.format("Product discount can't be negative or greater than %.1f%%.", MAX_DISCOUNT));
+            throw new ProductValidationException(
+                    String.format("Product discount can't be less than %.1f%% or greater than %.1f%%.", MIN_DISCOUNT, MAX_DISCOUNT));
         }
 
         BigDecimal price = product.getPrice();
         if (price.compareTo(MIN_PRICE_FOR_DISCOUNT) < 0 && discount.compareTo(BigDecimal.ZERO) > 0) {
-            throw new ProductValidationException(String.format("Discount is not applicable for products with price less than %.2f", MIN_PRICE_FOR_DISCOUNT));
+            throw new ProductValidationException(
+                    String.format("Discount is not applicable for products with price less than %.2f", MIN_PRICE_FOR_DISCOUNT));
         }
     }
 }

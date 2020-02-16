@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ProductValidationService {
-    private final Set<ProductValidationRule> validationRules = new HashSet<>();
+    private Set<ProductValidationRule> validationRules = new HashSet<>();
 
     public ProductValidationService(ProductService productService) {
         validationRules.add(new ProductNameValidationRule(productService));
