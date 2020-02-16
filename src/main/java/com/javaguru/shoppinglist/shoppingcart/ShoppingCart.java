@@ -9,7 +9,7 @@ import java.util.List;
 public class ShoppingCart {
     private Long id;
     private String name;
-    private List<ShoppingCartItem> productList = new ArrayList<>();
+    private List<ProductListItem> productList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -27,12 +27,12 @@ public class ShoppingCart {
         this.name = name;
     }
 
-    public List<ShoppingCartItem> getProductList() {
+    public List<ProductListItem> getProductList() {
         return productList;
     }
 
     public void addProduct(Product product, BigDecimal quantity) {
-        ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+        ProductListItem shoppingCartItem = new ProductListItem();
         shoppingCartItem.setProduct(product);
         shoppingCartItem.setQuantity(quantity);
         productList.add(shoppingCartItem);

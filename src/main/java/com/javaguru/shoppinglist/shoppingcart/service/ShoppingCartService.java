@@ -1,7 +1,7 @@
 package com.javaguru.shoppinglist.shoppingcart.service;
 
 import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
-import com.javaguru.shoppinglist.shoppingcart.ShoppingCartItem;
+import com.javaguru.shoppinglist.shoppingcart.ProductListItem;
 import com.javaguru.shoppinglist.shoppingcart.repository.ShoppingCartRepository;
 import com.javaguru.shoppinglist.shoppingcart.validation.ShoppingCartValidationService;
 
@@ -35,7 +35,7 @@ public class ShoppingCartService {
 
     public BigDecimal getShoppingCartTotalCost(ShoppingCart shoppingCart) {
         BigDecimal totalCost = new BigDecimal("0.00");
-        for (ShoppingCartItem item : shoppingCart.getProductList()) {
+        for (ProductListItem item : shoppingCart.getProductList()) {
             BigDecimal p = item.getProduct().getPrice();
             BigDecimal d = item.getProduct().getDiscount();
             BigDecimal priceWithDiscount = p.multiply(BigDecimal.ONE.subtract(d.divide(ONE_HUNDRED, 5, RoundingMode.HALF_UP)));

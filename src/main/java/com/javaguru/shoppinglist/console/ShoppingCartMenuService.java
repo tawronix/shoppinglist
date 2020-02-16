@@ -3,7 +3,7 @@ package com.javaguru.shoppinglist.console;
 import com.javaguru.shoppinglist.product.Product;
 import com.javaguru.shoppinglist.product.service.ProductService;
 import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
-import com.javaguru.shoppinglist.shoppingcart.ShoppingCartItem;
+import com.javaguru.shoppinglist.shoppingcart.ProductListItem;
 import com.javaguru.shoppinglist.shoppingcart.service.ShoppingCartService;
 import com.javaguru.shoppinglist.shoppingcart.validation.ShoppingCartValidationException;
 
@@ -78,7 +78,7 @@ public class ShoppingCartMenuService {
 
     private void printShoppingCart(ShoppingCart shoppingCart) {
         BigDecimal totalCost = shoppingCartService.getShoppingCartTotalCost(shoppingCart);
-        List<ShoppingCartItem> productList = shoppingCart.getProductList();
+        List<ProductListItem> productList = shoppingCart.getProductList();
         System.out.println("-".repeat(100));
         System.out.printf("Shopping cart: \"%s\" | Total cost: %.2f%n", shoppingCart.getName(), totalCost);
         productList.forEach(item -> {

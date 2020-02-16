@@ -4,7 +4,7 @@ import com.javaguru.shoppinglist.product.Product;
 
 import java.math.BigDecimal;
 
-public class ShoppingCartItem {
+public class ProductListItem {
     private Product product;
     private BigDecimal quantity;
 
