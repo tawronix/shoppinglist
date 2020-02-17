@@ -5,6 +5,7 @@ import com.javaguru.shoppinglist.product.Product;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ShoppingCart {
     private Long id;
@@ -32,9 +33,24 @@ public class ShoppingCart {
     }
 
     public void addProduct(Product product, BigDecimal quantity) {
-        ProductListItem shoppingCartItem = new ProductListItem();
-        shoppingCartItem.setProduct(product);
-        shoppingCartItem.setQuantity(quantity);
-        productList.add(shoppingCartItem);
+        ProductListItem productListItem = new ProductListItem();
+        productListItem.setProduct(product);
+        productListItem.setQuantity(quantity);
+        productList.add(productListItem);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ShoppingCart that = (ShoppingCart) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(productList, that.productList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, productList);
     }
 }

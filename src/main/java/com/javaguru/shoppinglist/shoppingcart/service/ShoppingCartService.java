@@ -1,7 +1,7 @@
 package com.javaguru.shoppinglist.shoppingcart.service;
 
-import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
 import com.javaguru.shoppinglist.shoppingcart.ProductListItem;
+import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
 import com.javaguru.shoppinglist.shoppingcart.repository.ShoppingCartRepository;
 import com.javaguru.shoppinglist.shoppingcart.validation.ShoppingCartValidationService;
 

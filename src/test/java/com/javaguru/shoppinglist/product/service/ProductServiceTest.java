@@ -36,10 +36,7 @@ public class ProductServiceTest {
         inOrder.verify(validationService).validate(productCaptor.capture());
         inOrder.verify(productRepository).insert(productCaptor.capture());
 
-        Product validatedProduct = productCaptor.getAllValues().get(0);
-        Product insertedProduct = productCaptor.getAllValues().get(1);
-        assertThat(validatedProduct).isEqualTo(product);
-        assertThat(insertedProduct).isEqualTo(product);
+        assertThat(productCaptor.getAllValues()).containsOnly(product);
         assertThat(product.hashCode()).isEqualTo(originalProductHash);
         assertThat(result).isEqualTo(product.getId());
     }
