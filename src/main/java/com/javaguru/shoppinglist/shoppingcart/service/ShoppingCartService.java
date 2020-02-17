@@ -7,6 +7,7 @@ import com.javaguru.shoppinglist.shoppingcart.validation.ShoppingCartValidationS
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 public class ShoppingCartService {
     public static final BigDecimal ONE_HUNDRED = new BigDecimal("100");
@@ -25,7 +26,7 @@ public class ShoppingCartService {
         return createdShoppingCart.getId();
     }
 
-    public ShoppingCart findById(Long id) {
+    public Optional<ShoppingCart> findById(Long id) {
         return shoppingCartRepository.findById(id);
     }
 

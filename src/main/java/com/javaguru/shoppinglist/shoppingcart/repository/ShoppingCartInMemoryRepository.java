@@ -4,6 +4,7 @@ import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ShoppingCartInMemoryRepository implements ShoppingCartRepository {
     private final Map<Long, ShoppingCart> shoppingCarts = new HashMap<>();
@@ -17,8 +18,8 @@ public class ShoppingCartInMemoryRepository implements ShoppingCartRepository {
     }
 
     @Override
-    public ShoppingCart findById(Long id) {
-        return shoppingCarts.get(id);
+    public Optional<ShoppingCart> findById(Long id) {
+        return Optional.ofNullable(shoppingCarts.get(id));
     }
 
     @Override

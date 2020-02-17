@@ -2,8 +2,8 @@ package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.product.Product;
 import com.javaguru.shoppinglist.product.service.ProductService;
-import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
 import com.javaguru.shoppinglist.shoppingcart.ProductListItem;
+import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
 import com.javaguru.shoppinglist.shoppingcart.service.ShoppingCartService;
 import com.javaguru.shoppinglist.shoppingcart.validation.ShoppingCartValidationException;
 
@@ -39,9 +39,9 @@ public class ShoppingCartMenuService {
 
     public void findShoppingCart() {
         Long id = userInput.getLong("Enter shopping cart id");
-        ShoppingCart shoppingCart = shoppingCartService.findById(id);
-        if (shoppingCart != null) {
-            printShoppingCart(shoppingCart);
+        Optional<ShoppingCart> shoppingCart = shoppingCartService.findById(id);
+        if (shoppingCart.isPresent()) {
+            printShoppingCart(shoppingCart.get());
         } else {
             System.out.println("Shopping cart not found.");
         }

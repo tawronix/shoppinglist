@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -24,8 +26,6 @@ public class ProductServiceTest {
 
     @Test
     public void testCreateProduct() {
-        Product dummyProduct = new Product();
-        when(productRepository.insert(any())).thenReturn(dummyProduct);
         Product product = createTestProduct();
         int originalProductHash = product.hashCode();
         when(productRepository.insert(product)).thenReturn(product);
@@ -43,16 +43,22 @@ public class ProductServiceTest {
 
     @Test
     public void testFindProductById() {
-        Long id = 9999L;
-        victim.findProductById(id);
-        verify(productRepository).findById(id);
+        Optional<Product> product = Optional.of(createTestProduct());
+        when(productRepository.findById(9999L)).thenReturn(product);
+
+        Optional<Product> result = victim.findProductById(9999L);
+
+        assertThat(result).isEqualTo(product);
     }
 
     @Test
     public void testFindProductByName() {
-        String name = "SOME_NAME";
-        victim.findProductByName(name);
-        verify(productRepository).findByName(name);
+        Optional<Product> product = Optional.of(createTestProduct());
+        when(productRepository.findByName("TEST_PRODUCT")).thenReturn(product);
+
+        Optional<Product> result = victim.findProductByName("TEST_PRODUCT");
+
+        assertThat(result).isEqualTo(product);
     }
 
     @Test
@@ -66,10 +72,7 @@ public class ProductServiceTest {
         inOrder.verify(validationService).validate(productCaptor.capture());
         inOrder.verify(productRepository).update(productCaptor.capture());
 
-        Product validatedProduct = productCaptor.getAllValues().get(0);
-        Product updatedProduct = productCaptor.getAllValues().get(1);
-        assertThat(validatedProduct).isEqualTo(product);
-        assertThat(updatedProduct).isEqualTo(product);
+        assertThat(productCaptor.getAllValues()).containsOnly(product);
         assertThat(product.hashCode()).isEqualTo(originalProductHash);
     }
 
