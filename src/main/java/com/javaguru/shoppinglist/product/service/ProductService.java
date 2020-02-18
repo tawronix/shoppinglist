@@ -10,8 +10,8 @@ import java.util.Optional;
 public class ProductService {
     private static final ProductService ourInstance = new ProductService();
 
-    private final ProductRepository productRepository = new ProductInMemoryRepository();
-    private final ProductValidationService validationService = new ProductValidationService(this);
+    private ProductRepository productRepository = new ProductInMemoryRepository();
+    private ProductValidationService validationService = new ProductValidationService(this);
 
     private ProductService() {
     }
