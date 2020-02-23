@@ -31,21 +31,18 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
-    public boolean update(Product product) {
+    public void update(Product product) {
         Product storedProduct = products.get(product.getId());
-        if (storedProduct == null) return false;
         storedProduct.setName(product.getName());
         storedProduct.setCategory(product.getCategory());
         storedProduct.setPrice(product.getPrice());
         storedProduct.setDiscount(product.getDiscount());
         storedProduct.setDescription(product.getDescription());
-        return true;
     }
 
     @Override
-    public boolean delete(Long id) {
-        Product deletedProduct = products.remove(id);
-        return deletedProduct != null;
+    public void delete(Long id) {
+        products.remove(id);
     }
 
     private Product createCopy(Product original) {

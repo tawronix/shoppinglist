@@ -1,7 +1,9 @@
 package com.javaguru.shoppinglist.shoppingcart.validation;
 
 import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ShoppingCartNameValidationRule implements ShoppingCartValidationRule {
     @Override
     public void validate(ShoppingCart shoppingCart) {

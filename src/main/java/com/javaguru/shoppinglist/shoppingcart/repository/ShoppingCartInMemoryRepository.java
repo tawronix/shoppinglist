@@ -23,8 +23,7 @@ public class ShoppingCartInMemoryRepository implements ShoppingCartRepository {
     }
 
     @Override
-    public boolean delete(Long id) {
-        ShoppingCart deletedShoppingCart = shoppingCarts.remove(id);
-        return deletedShoppingCart != null;
+    public void delete(Long id) {
+        shoppingCarts.remove(id);
     }
 }

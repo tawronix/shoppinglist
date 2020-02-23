@@ -1,9 +1,11 @@
 package com.javaguru.shoppinglist.product.validation;
 
 import com.javaguru.shoppinglist.product.Product;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProductValidationService {
     private final List<ProductValidationRule> validationRules;
 

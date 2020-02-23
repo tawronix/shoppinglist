@@ -3,9 +3,11 @@ package com.javaguru.shoppinglist.product.service;
 import com.javaguru.shoppinglist.product.Product;
 import com.javaguru.shoppinglist.product.repository.ProductRepository;
 import com.javaguru.shoppinglist.product.validation.ProductValidationService;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductValidationService validationService;
@@ -29,12 +31,12 @@ public class ProductService {
         return productRepository.findByName(name);
     }
 
-    public boolean updateProduct(Product product) {
+    public void updateProduct(Product product) {
         validationService.validate(product);
-        return productRepository.update(product);
+        productRepository.update(product);
     }
 
-    public boolean deleteProduct(Long id) {
-        return productRepository.delete(id);
+    public void deleteProduct(Long id) {
+        productRepository.delete(id);
     }
 }
