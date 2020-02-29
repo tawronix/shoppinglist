@@ -2,8 +2,8 @@ package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.product.Product;
 import com.javaguru.shoppinglist.product.service.ProductService;
+import com.javaguru.shoppinglist.shoppingcart.ProductListItem;
 import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
-import com.javaguru.shoppinglist.shoppingcart.ShoppingCartItem;
 import com.javaguru.shoppinglist.shoppingcart.service.ShoppingCartService;
 import com.javaguru.shoppinglist.shoppingcart.validation.ShoppingCartValidationException;
 
@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class ShoppingCartMenuService {
-    private final UserInput userInput = new UserInput();
-    private final ShoppingCartService shoppingCartService = ShoppingCartService.getInstance();
-    private final ProductService productService = ProductService.getInstance();
+    private final ShoppingCartService shoppingCartService;
+    private final ProductService productService;
     private final Menu menu;
+    private final UserInput userInput = new UserInput();
 
-    public ShoppingCartMenuService(Menu menu) {
+    public ShoppingCartMenuService(ShoppingCartService shoppingCartService, ProductService productService, Menu menu) {
+        this.shoppingCartService = shoppingCartService;
+        this.productService = productService;
         this.menu = menu;
     }
 
@@ -37,9 +39,9 @@ public class ShoppingCartMenuService {
 
     public void findShoppingCart() {
         Long id = userInput.getLong("Enter shopping cart id");
-        ShoppingCart shoppingCart = shoppingCartService.findById(id);
-        if (shoppingCart != null) {
-            printShoppingCart(shoppingCart);
+        Optional<ShoppingCart> shoppingCart = shoppingCartService.findById(id);
+        if (shoppingCart.isPresent()) {
+            printShoppingCart(shoppingCart.get());
         } else {
             System.out.println("Shopping cart not found.");
         }
@@ -76,16 +78,16 @@ public class ShoppingCartMenuService {
 
     private void printShoppingCart(ShoppingCart shoppingCart) {
         BigDecimal totalCost = shoppingCartService.getShoppingCartTotalCost(shoppingCart);
-        List<ShoppingCartItem> productList = shoppingCart.getProductList();
+        List<ProductListItem> productList = shoppingCart.getProductList();
         System.out.println("-".repeat(100));
         System.out.printf("Shopping cart: \"%s\" | Total cost: %.2f%n", shoppingCart.getName(), totalCost);
-        for (ShoppingCartItem item : productList) {
+        productList.forEach(item -> {
             Product product = item.getProduct();
             System.out.printf("\t%d. %s | Price: %.2f | Discount: %.1f%% | Quantity: %.3f%n",
-                    productList.indexOf(item) + 1, product.getName(),
-                    product.getPrice(), product.getDiscount(), item.getQuantity()
+                    productList.indexOf(item) + 1, product.getName(), product.getPrice(),
+                    product.getDiscount(), item.getQuantity()
             );
-        }
+        });
         System.out.println("-".repeat(100));
     }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 public class Menu {
     private final String title;
     private final List<MenuItem> menuItems = new ArrayList<>();
-    private final UserInput userInput = new UserInput();
 
     private boolean active;
 
@@ -25,6 +24,7 @@ public class Menu {
         menuItems.forEach(menuItem -> System.out.print(" | " + menuItem));
         System.out.println();
 
+        UserInput userInput = new UserInput();
         while (true) {
             int menuItemNumber = userInput.getInt("Select menu item");
             try {

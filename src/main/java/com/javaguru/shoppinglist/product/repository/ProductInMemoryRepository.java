@@ -33,6 +33,7 @@ public class ProductInMemoryRepository implements ProductRepository {
     @Override
     public boolean update(Product product) {
         Product storedProduct = products.get(product.getId());
+        if (storedProduct == null) return false;
         storedProduct.setName(product.getName());
         storedProduct.setCategory(product.getCategory());
         storedProduct.setPrice(product.getPrice());

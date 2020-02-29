@@ -1,23 +1,18 @@
 package com.javaguru.shoppinglist.product.service;
 
 import com.javaguru.shoppinglist.product.Product;
-import com.javaguru.shoppinglist.product.repository.ProductInMemoryRepository;
 import com.javaguru.shoppinglist.product.repository.ProductRepository;
 import com.javaguru.shoppinglist.product.validation.ProductValidationService;
 
 import java.util.Optional;
 
 public class ProductService {
-    private static final ProductService ourInstance = new ProductService();
+    private final ProductRepository productRepository;
+    private final ProductValidationService validationService;
 
-    private ProductRepository productRepository = new ProductInMemoryRepository();
-    private ProductValidationService validationService = new ProductValidationService(this);
-
-    private ProductService() {
-    }
-
-    public static ProductService getInstance() {
-        return ourInstance;
+    public ProductService(ProductRepository productRepository, ProductValidationService validationService) {
+        this.productRepository = productRepository;
+        this.validationService = validationService;
     }
 
     public Long createProduct(Product product) {

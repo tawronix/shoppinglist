@@ -1,24 +1,24 @@
 package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.product.Product;
+import com.javaguru.shoppinglist.product.service.ProductService;
+import com.javaguru.shoppinglist.shoppingcart.service.ShoppingCartService;
 
-public class UIFactory {
-    private static UIFactory ourInstance = new UIFactory();
-
+public class MenuFactory {
+    private final ProductService productService;
+    private final ShoppingCartService shoppingCartService;
     private final Menu mainMenu;
     private final Menu editProductMenu;
     private final Menu shoppingCartMenu;
 
     private EditProductMenuService editProductMenuService;
 
-    private UIFactory() {
+    public MenuFactory(ProductService productService, ShoppingCartService shoppingCartService) {
+        this.productService = productService;
+        this.shoppingCartService = shoppingCartService;
         mainMenu = createMainMenu();
         editProductMenu = createEditProductMenu();
         shoppingCartMenu = createShoppingCartMenu();
-    }
-
-    public static UIFactory getInstance() {
-        return ourInstance;
     }
 
     public Menu getMainMenu() {
@@ -36,7 +36,7 @@ public class UIFactory {
 
     private Menu createMainMenu() {
         Menu mainMenu = new Menu("MENU");
-        MainMenuService mainMenuService = new MainMenuService(mainMenu);
+        MainMenuService mainMenuService = new MainMenuService(productService, this, mainMenu);
         mainMenu.addItem(new MenuItem("Create product", mainMenuService::createProduct));
         mainMenu.addItem(new MenuItem("Find product by id", mainMenuService::findProductById));
         mainMenu.addItem(new MenuItem("Edit product", mainMenuService::editProduct));
@@ -48,7 +48,7 @@ public class UIFactory {
 
     private Menu createEditProductMenu() {
         Menu editProductMenu = new Menu("EDIT PRODUCT");
-        editProductMenuService = new EditProductMenuService(editProductMenu);
+        editProductMenuService = new EditProductMenuService(productService, editProductMenu);
         editProductMenu.addItem(new MenuItem("Name", editProductMenuService::editName));
         editProductMenu.addItem(new MenuItem("Category", editProductMenuService::editCategory));
         editProductMenu.addItem(new MenuItem("Price", editProductMenuService::editPrice));
@@ -61,7 +61,7 @@ public class UIFactory {
 
     private Menu createShoppingCartMenu() {
         Menu shoppingCartMenu = new Menu("SHOPPING CART");
-        ShoppingCartMenuService shoppingCartMenuService = new ShoppingCartMenuService(shoppingCartMenu);
+        ShoppingCartMenuService shoppingCartMenuService = new ShoppingCartMenuService(shoppingCartService, productService, shoppingCartMenu);
         shoppingCartMenu.addItem(new MenuItem("Create shopping cart", shoppingCartMenuService::createShoppingCart));
         shoppingCartMenu.addItem(new MenuItem("Find shopping cart", shoppingCartMenuService::findShoppingCart));
         shoppingCartMenu.addItem(new MenuItem("Delete shopping cart", shoppingCartMenuService::deleteShoppingCart));

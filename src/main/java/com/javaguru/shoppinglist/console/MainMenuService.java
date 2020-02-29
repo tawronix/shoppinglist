@@ -11,11 +11,14 @@ public class MainMenuService {
     public static final String ENTER_PRODUCT_ID = "Enter product id";
     public static final String PRODUCT_NOT_FOUND = "Product not found.";
 
-    private final UserInput userInput = new UserInput();
-    private final ProductService productService = ProductService.getInstance();
+    private final ProductService productService;
+    private final MenuFactory menuFactory;
     private final Menu menu;
+    private final UserInput userInput = new UserInput();
 
-    public MainMenuService(Menu menu) {
+    public MainMenuService(ProductService productService, MenuFactory menuFactory, Menu menu) {
+        this.productService = productService;
+        this.menuFactory = menuFactory;
         this.menu = menu;
     }
 
@@ -52,7 +55,7 @@ public class MainMenuService {
         Optional<Product> product = productService.findProductById(id);
         if (product.isPresent()) {
             System.out.println(product.get());
-            Menu editMenu = UIFactory.getInstance().getEditProductMenu(product.get());
+            Menu editMenu = menuFactory.getEditProductMenu(product.get());
             do {
                 editMenu.show();
             } while (editMenu.isActive());
@@ -68,7 +71,7 @@ public class MainMenuService {
     }
 
     public void shoppingCart() {
-        Menu shoppingCartMenu = UIFactory.getInstance().getShoppingCartMenu();
+        Menu shoppingCartMenu = menuFactory.getShoppingCartMenu();
         do {
             shoppingCartMenu.show();
         } while (shoppingCartMenu.isActive());

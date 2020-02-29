@@ -10,13 +10,13 @@ public class ShoppingCartProductListValidationRule implements ShoppingCartValida
     public void validate(ShoppingCart shoppingCart) {
         checkNotNull(shoppingCart);
 
-        shoppingCart.getProductList().forEach(productLine -> {
-            Product product = productLine.getProduct();
+        shoppingCart.getProductList().forEach(productListItem -> {
+            Product product = productListItem.getProduct();
             if (product == null) {
                 throw new ShoppingCartValidationException("Product can't be null.");
             }
 
-            BigDecimal quantity = productLine.getQuantity();
+            BigDecimal quantity = productListItem.getQuantity();
             if (quantity == null) {
                 throw new ShoppingCartValidationException("Quantity can't be null.");
             }
