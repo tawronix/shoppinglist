@@ -1,5 +1,9 @@
 package com.javaguru.shoppinglist.console;
 
+import com.javaguru.shoppinglist.console.menu.Menu;
+import org.springframework.stereotype.Component;
+
+@Component
 public class ConsoleUI {
     private final Menu mainMenu;
 
@@ -9,10 +13,7 @@ public class ConsoleUI {
 
     public void start() {
         try {
-            do {
-                mainMenu.show();
-                System.out.println("-".repeat(100));
-            } while (mainMenu.isActive());
+            mainMenu.show();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);

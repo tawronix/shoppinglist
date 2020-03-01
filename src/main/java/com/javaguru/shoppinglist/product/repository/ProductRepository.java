@@ -1,9 +1,11 @@
 package com.javaguru.shoppinglist.product.repository;
 
 import com.javaguru.shoppinglist.product.Product;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface ProductRepository {
     Product insert(Product product);
 
@@ -11,7 +13,7 @@ public interface ProductRepository {
 
     Optional<Product> findByName(String name);
 
-    boolean update(Product product);
+    void update(Product product);
 
-    boolean delete(Long id);
+    void delete(Long id);
 }

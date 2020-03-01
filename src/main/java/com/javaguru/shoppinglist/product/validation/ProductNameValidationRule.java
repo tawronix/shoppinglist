@@ -2,9 +2,11 @@ package com.javaguru.shoppinglist.product.validation;
 
 import com.javaguru.shoppinglist.product.Product;
 import com.javaguru.shoppinglist.product.repository.ProductRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class ProductNameValidationRule implements ProductValidationRule {
     private final ProductRepository productRepository;
 

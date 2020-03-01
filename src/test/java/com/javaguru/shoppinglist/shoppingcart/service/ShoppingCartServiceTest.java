@@ -48,7 +48,7 @@ public class ShoppingCartServiceTest {
         Optional<ShoppingCart> shoppingCart = Optional.of(createShoppingCart());
         when(shoppingCartRepository.findById(9999L)).thenReturn(shoppingCart);
 
-        Optional<ShoppingCart> result = victim.findById(9999L);
+        Optional<ShoppingCart> result = victim.findShoppingCartById(9999L);
 
         assertThat(result).isEqualTo(shoppingCart);
     }

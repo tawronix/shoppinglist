@@ -4,11 +4,13 @@ import com.javaguru.shoppinglist.shoppingcart.ProductListItem;
 import com.javaguru.shoppinglist.shoppingcart.ShoppingCart;
 import com.javaguru.shoppinglist.shoppingcart.repository.ShoppingCartRepository;
 import com.javaguru.shoppinglist.shoppingcart.validation.ShoppingCartValidationService;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
 
+@Service
 public class ShoppingCartService {
     public static final BigDecimal ONE_HUNDRED = new BigDecimal("100");
 
@@ -26,12 +28,12 @@ public class ShoppingCartService {
         return createdShoppingCart.getId();
     }
 
-    public Optional<ShoppingCart> findById(Long id) {
+    public Optional<ShoppingCart> findShoppingCartById(Long id) {
         return shoppingCartRepository.findById(id);
     }
 
-    public boolean deleteShoppingCart(Long id) {
-        return shoppingCartRepository.delete(id);
+    public void deleteShoppingCart(Long id) {
+        shoppingCartRepository.delete(id);
     }
 
     public BigDecimal getShoppingCartTotalCost(ShoppingCart shoppingCart) {
