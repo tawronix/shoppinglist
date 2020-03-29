@@ -1,23 +1,49 @@
 package com.javaguru.shoppinglist.config;
 
-import com.javaguru.shoppinglist.product.repository.ProductInMemoryRepository;
-import com.javaguru.shoppinglist.product.repository.ProductRepository;
-import com.javaguru.shoppinglist.shoppingcart.repository.ShoppingCartInMemoryRepository;
-import com.javaguru.shoppinglist.shoppingcart.repository.ShoppingCartRepository;
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = "com.javaguru.shoppinglist")
+@PropertySource("classpath:application.properties")
 public class AppConfig {
+    @Value("${jdbc.url}")
+    private String jdbcUrl;
+
+    @Value("${driver.class}")
+    private String driverClass;
+
+    @Value("${database.user.name}")
+    private String userName;
+
+    @Value("${database.user.password}")
+    private String password;
+
     @Bean
-    public ProductRepository productRepository() {
-        return new ProductInMemoryRepository();
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 
     @Bean
-    public ShoppingCartRepository shoppingCartRepository() {
-        return new ShoppingCartInMemoryRepository();
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl(jdbcUrl);
+        dataSource.setDriverClassName(driverClass);
+        dataSource.setUsername(userName);
+        dataSource.setPassword(password);
+        return dataSource;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(dataSource());
     }
 }
