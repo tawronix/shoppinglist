@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Profile("local")
+@Profile("jdbc")
 public class DefaultProductRepository implements ProductRepository {
     private final JdbcTemplate jdbcTemplate;
 
