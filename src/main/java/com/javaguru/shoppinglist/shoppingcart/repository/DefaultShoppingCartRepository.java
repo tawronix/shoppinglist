@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Profile({"jdbc", "default"})
+@Profile("jdbc")
 public class DefaultShoppingCartRepository implements ShoppingCartRepository {
     private final JdbcTemplate jdbcTemplate;
 

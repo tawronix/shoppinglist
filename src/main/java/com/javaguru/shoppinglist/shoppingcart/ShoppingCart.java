@@ -2,14 +2,25 @@ package com.javaguru.shoppinglist.shoppingcart;
 
 import com.javaguru.shoppinglist.product.Product;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "shopping_carts")
 public class ShoppingCart {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
+    @OneToMany(
+            mappedBy = "shoppingCart",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<ProductListItem> productList = new ArrayList<>();
 
     public Long getId() {
@@ -34,6 +45,7 @@ public class ShoppingCart {
 
     public void addProduct(Product product, BigDecimal quantity) {
         ProductListItem productListItem = new ProductListItem();
+        productListItem.setShoppingCart(this);
         productListItem.setProduct(product);
         productListItem.setQuantity(quantity);
         productList.add(productListItem);
