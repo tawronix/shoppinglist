@@ -25,6 +25,8 @@ CREATE TABLE shopping_cart_items (
     product_id BIGINT NOT NULL,
     quantity DECIMAL(9,3) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (shopping_cart_id) REFERENCES shopping_carts (id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
+    FOREIGN KEY (shopping_cart_id)
+        REFERENCES shopping_carts (id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id)
+        REFERENCES products (id) ON DELETE CASCADE
 );
