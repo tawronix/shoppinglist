@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/shopping-carts")
@@ -21,19 +22,24 @@ public class ShoppingCartController implements ErrorHandler {
     }
 
     @GetMapping("/{id}")
-    public ShoppingCartDTO getShoppingCart(@PathVariable Long id) {
+    public ShoppingCartDTO findById(@PathVariable Long id) {
         return new ShoppingCartDTO(shoppingCartService.findById(id));
     }
 
+    @GetMapping(params = "name")
+    public ResponseEntity<ShoppingCartDTO> findByName(@RequestParam("name") String name) {
+        Optional<ShoppingCart> foundShoppingCart = shoppingCartService.findByName(name);
+        return foundShoppingCart.map(shoppingCart -> ResponseEntity.ok(new ShoppingCartDTO(shoppingCart)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @GetMapping
-    public List<ShoppingCartDTO> getAllShoppingCarts() {
-        List<ShoppingCartDTO> shoppingCartList = new ArrayList<>();
-        shoppingCartService.findAll().forEach(shoppingCart -> shoppingCartList.add(new ShoppingCartDTO(shoppingCart)));
-        return shoppingCartList;
+    public List<ShoppingCartDTO> findAll() {
+        return shoppingCartService.findAll().stream().map(ShoppingCartDTO::new).collect(Collectors.toList());
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveShoppingCart(@RequestBody ShoppingCart shoppingCart) {
+    public ResponseEntity<Void> save(@RequestBody ShoppingCart shoppingCart) {
         Long id = shoppingCartService.save(shoppingCart);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -44,13 +50,14 @@ public class ShoppingCartController implements ErrorHandler {
     }
 
     @PutMapping("/{id}")
-    public void updateShoppingCart(@PathVariable Long id, @RequestBody ShoppingCart shoppingCart) {
+    public void update(@PathVariable Long id, @RequestBody ShoppingCart shoppingCart) {
         shoppingCart.setId(id);
         shoppingCartService.update(shoppingCart);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteShoppingCart(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         shoppingCartService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -15,17 +15,18 @@ public interface ErrorHandler {
 
         Response response = new Response();
         response.message = e.getMessage();
-
-        if (e instanceof NoSuchElementException) {
+        try {
+            throw e;
+        } catch (NoSuchElementException ex) {
             response.error = "Resource not found";
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        } else if (e instanceof HttpMessageNotReadableException) {
-            response.error = "Bad request format";
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        } else if (e instanceof ValidationException) {
+        } catch (ValidationException ex) {
             response.error = "Validation exception";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        } else {
+        } catch (HttpMessageNotReadableException ex) {
+            response.error = "Bad request format";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        } catch (RuntimeException ex) {
             response.error = "Internal error";
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }

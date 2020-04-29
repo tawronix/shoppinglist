@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -22,6 +23,10 @@ public class ProductService {
     public Product findById(Long id) {
         return productRepository.get(id)
                 .orElseThrow(() -> new NoSuchElementException("Product not found (id=" + id + ")"));
+    }
+
+    public Optional<Product> findByName(String name) {
+        return productRepository.getByName(name);
     }
 
     public List<Product> findAll() {

@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,17 +22,24 @@ public class ProductController implements ErrorHandler {
     }
 
     @GetMapping("/{id}")
-    public ProductDTO getProduct(@PathVariable Long id) {
+    public ProductDTO findById(@PathVariable Long id) {
         return new ProductDTO(productService.findById(id));
     }
 
+    @GetMapping(params = "name")
+    public ResponseEntity<ProductDTO> findByName(@RequestParam("name") String name) {
+        Optional<Product> foundProduct = productService.findByName(name);
+        return foundProduct.map(product -> ResponseEntity.ok(new ProductDTO(product)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @GetMapping
-    public List<ProductDTO> getAllProducts() {
+    public List<ProductDTO> findAll() {
         return productService.findAll().stream().map(ProductDTO::new).collect(Collectors.toList());
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveProduct(@RequestBody Product product) {
+    public ResponseEntity<Void> save(@RequestBody Product product) {
         Long id = productService.save(product);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -42,13 +50,14 @@ public class ProductController implements ErrorHandler {
     }
 
     @PutMapping("/{id}")
-    public void updateProduct(@PathVariable Long id, @RequestBody Product product) {
+    public void update(@PathVariable Long id, @RequestBody Product product) {
         product.setId(id);
         productService.update(product);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         productService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

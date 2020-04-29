@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +25,10 @@ public class ShoppingCartService {
     public ShoppingCart findById(Long id) {
         return shoppingCartRepository.get(id)
                 .orElseThrow(() -> new NoSuchElementException("ShoppingCart not found (id=" + id + ")"));
+    }
+
+    public Optional<ShoppingCart> findByName(String name) {
+        return shoppingCartRepository.getByName(name);
     }
 
     public List<ShoppingCart> findAll() {

@@ -48,6 +48,16 @@ public class ShoppingCartServiceTest {
     }
 
     @Test
+    public void findByName() {
+        ShoppingCart shoppingCart = createTestShoppingCart();
+        when(shoppingCartRepository.getByName(shoppingCart.getName())).thenReturn(Optional.of(shoppingCart));
+
+        Optional<ShoppingCart> result = victim.findByName(shoppingCart.getName());
+
+        assertThat(result).isEqualTo(Optional.of(shoppingCart));
+    }
+
+    @Test
     public void findAll() {
         List<ShoppingCart> shoppingCartList = new ArrayList<>();
         shoppingCartList.add(createTestShoppingCart());

@@ -45,6 +45,16 @@ public class ProductServiceTest {
     }
 
     @Test
+    public void findByName() {
+        Product product = createTestProduct();
+        when(productRepository.getByName(product.getName())).thenReturn(Optional.of(product));
+
+        Optional<Product> result = victim.findByName(product.getName());
+
+        assertThat(result).isEqualTo(Optional.of(product));
+    }
+
+    @Test
     public void findAll() {
         List<Product> productList = new ArrayList<>();
         productList.add(createTestProduct());
