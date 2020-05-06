@@ -1,8 +1,9 @@
-.gradle
-/build/
-!gradle/wrapper/gradle-wrapper.jar
-/target/
-/out/
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+.DS_Store
 
 ### STS ###
 .apt_generated
@@ -11,6 +12,7 @@
 .project
 .settings
 .springBeans
+.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
@@ -19,11 +21,12 @@
 *.ipr
 
 ### NetBeans ###
-nbproject/private/
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
 
-.DS_Store
+### VS Code ###
+.vscode/
